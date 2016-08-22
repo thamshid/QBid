@@ -1,3 +1,5 @@
 *.pyc
 env/*
+QBid_server/.idea/*
+QBid_server/db.sqlite3
 

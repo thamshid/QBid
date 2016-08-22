@@ -2,4 +2,6 @@
 env/*
 QBid_server/.idea/*
 QBid_server/db.sqlite3
+QBid_server/api/migrations/*
+QBid_server/images/*
 

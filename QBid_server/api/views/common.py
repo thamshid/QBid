@@ -1,7 +1,11 @@
+import logging
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.models import Team
+
+log = logging.getLogger(__name__)
 
 
 class Login(APIView):
@@ -13,6 +17,6 @@ class Login(APIView):
                 team = Team.objects.get(username=username, password=password)
             except:
                 return Response({"status": -1, "message": "Invalid username or password"})
-            return Response({"status": 1, "message":"Login success"})
+            return Response({"status": 1, "message": "Login success"})
         except:
             pass

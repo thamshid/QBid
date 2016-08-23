@@ -6,3 +6,4 @@ QBid_server/api/migrations/*
 QBid_server/images/*
 QBid_server/media/*
 QBid_server/static/*
+QBid_server/Log/

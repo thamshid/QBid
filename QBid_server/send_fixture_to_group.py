@@ -10,11 +10,11 @@ if __name__ == "__main__":
     from api.models import Match
 
     try:
-        matches = Match.objects.all()
+        matches = Match.objects.all().order_by('-date')
         message = "QPL 2016 FIXTURE "
         send_whatsapp_msg(message=message)
         for match in matches:
-            send_whatsapp_msg(message=str(match))
+            send_whatsapp_msg(message=str(match.date) + " "+ str(match))
 
     except Exception as e:
         print e.message

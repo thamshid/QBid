@@ -4,4 +4,6 @@ from api.views import common
 urlpatterns = [
     url(r'^login/$', common.Login.as_view(), name='home'),
     url(r'^point_table/', common.PointTable.as_view(), name='note_list'),
+    url(r'^last_matches/', common.LastMatches.as_view(), name='last_matches_list'),
+    url(r'^leading_goal_scorer/', common.LeadingGoalScorer.as_view(), name='leading_goal_scorer'),
 ]

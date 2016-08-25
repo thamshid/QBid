@@ -113,8 +113,8 @@ class Match(models.Model):
     team2 = models.ForeignKey(Team, related_name='team2')
     date = models.DateField(null=True)
     match_status = models.IntegerField(default=0)
-    winner = models.ForeignKey(Team, related_name="winner", null=True)
-    looser = models.ForeignKey(Team, related_name="looser", null=True)
+    winner = models.ForeignKey(Team, related_name="winner", null=True, blank=True)
+    looser = models.ForeignKey(Team, related_name="looser", null=True, blank=True)
     draw = models.BooleanField(default=False)
     team1_goal = models.IntegerField(default=0)
     team2_goal = models.IntegerField(default=0)
@@ -164,7 +164,7 @@ class Goal(models.Model):
     def save(self, *args, **kwargs):
         if self.team == self.op_team:
             raise SameTeam
-        if not TeamPlayer.objects.filter(team=self.team, player=self.player):
+        if TeamPlayer.objects.filter(team=self.team, player=self.player):
             self.player.no_of_goals += 1
             self.player.save()
             self.self_status = True

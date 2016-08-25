@@ -3,8 +3,8 @@ import logging
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Team
-from api.serializer import PointTableSerializer
+from api.models import Team, Match, Player
+from api.serializer import PointTableSerializer, MatchSerializer, PlayerSerializer
 
 log = logging.getLogger(__name__)
 
@@ -29,6 +29,31 @@ class PointTable(APIView):
             queryset = Team.objects.all().order_by('-point', '-goal_fo', 'goal_against', 'game_played')
             data = PointTableSerializer(queryset, many=True)
             return Response(data.data)
-        except exceptions as e:
+        except Exception as e:
             log.error(e.message)
+            return Response({"status": -1, "message": str(e.message)})
+
+
+class LastMatches(APIView):
+    def post(self, request):
+        try:
+            numbers = int(request.data.get('numbers', 3))
+            queryset = Match.objects.filter(match_status=2).order_by('-date')[:numbers]
+            data = MatchSerializer(queryset, many=True)
+            return Response(data.data)
+        except Exception as e:
+            log.error(e.message)
+            return Response({"status": -1, "message": str(e.message)})
+
+
+class LeadingGoalScorer(APIView):
+    def post(self, request):
+        try:
+            numbers = int(request.data.get('numbers', 3))
+            queryset = Player.objects.filter(no_of_goals__gt=0).order_by('-no_of_goals')[:numbers]
+            data = PlayerSerializer(queryset, many=True)
+            return Response(data.data)
+        except Exception as e:
+            log.error(e.message)
+            return Response({"status": -1, "message": str(e.message)})
 

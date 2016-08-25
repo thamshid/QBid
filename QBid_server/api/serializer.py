@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import Team, Match, Player
+from api.models import Team, Match, Player, Goal
 
 class PointTableSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,4 +36,16 @@ class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
         fields = ('id', 'name', 'photo', 'no_of_goals', 'player_category')
+
+
+class GoalSerializer(serializers.ModelSerializer):
+    player_name = serializers.SerializerMethodField('get_player_name')
+
+    def get_player_name(self, obj):
+        return obj.player.name
+
+    class Meta:
+        model = Goal
+        fields = ('id', 'name', 'photo', 'no_of_goals', 'player_category')
+
 

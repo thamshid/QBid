@@ -160,6 +160,7 @@ class Goal(models.Model):
     team = models.ForeignKey(Team, related_name="team")
     op_team = models.ForeignKey(Team, related_name="Opposite_team")
     self_status = models.BooleanField(default=False)
+    goal_time = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if self.team == self.op_team:

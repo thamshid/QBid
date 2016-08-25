@@ -4,6 +4,8 @@ from datetime import datetime
 
 from django.db import models
 
+from  libraries.custom_exceptions import SameTeam, PlayerSoldOUT
+
 
 class Image(models.Model):
     title = models.CharField(max_length=100)
@@ -35,6 +37,13 @@ class Team(models.Model):
     password = models.CharField(max_length=250)
     image = models.ForeignKey(Image, null=True)
     balance = models.IntegerField(default=0)
+    game_played = models.IntegerField(default=0)
+    win = models.IntegerField(default=0)
+    lost = models.IntegerField(default=0)
+    draw = models.IntegerField(default=0)
+    goal_fo = models.IntegerField(default=0)
+    goal_against = models.IntegerField(default=0)
+    point = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name
@@ -80,7 +89,9 @@ class TeamPlayer(models.Model):
         if not self.created:
             self.created = datetime.now()
         if self.player.sold_out:
-            raise
+            raise PlayerSoldOUT
+        else:
+            self.player.sold_out = True
 
         super(TeamPlayer, self).save(*args, **kwargs)
 
@@ -102,49 +113,70 @@ class Match(models.Model):
     team2 = models.ForeignKey(Team, related_name='team2')
     date = models.DateField(null=True)
     match_status = models.IntegerField(default=0)
-
-    def __unicode__(self):
-        return self.team1.name + " x " + self.team2.name
-
-
-class MatchResult(models.Model):
-    match = models.ForeignKey(Match)
     winner = models.ForeignKey(Team, related_name="winner", null=True)
     looser = models.ForeignKey(Team, related_name="looser", null=True)
     draw = models.BooleanField(default=False)
     team1_goal = models.IntegerField(default=0)
     team2_goal = models.IntegerField(default=0)
+    update_game_played = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.match.team1.name + " x " + self.match.team2.name
+        return self.team1.name + " x " + self.team2.name
 
     def save(self, *args, **kwargs):
-        if self.match.match_status == 2:
+        if self.match_status == 1 and not self.update_game_played:
+            self.team1.game_played += 1
+            self.team1.save()
+            self.team2.game_played += 1
+            self.team2.save()
+            self.update_game_played = True
+        if self.match_status == 2:
             if self.team1_goal == self.team2_goal:
                 self.draw = True
+                self.team1.draw += 1
+                self.team1.save()
+                self.team2.draw += 1
+                self.team2.save()
             elif self.team1_goal < self.team2_goal:
-                self.winner = self.match.team2
-                self.looser = self.match.team1
+                self.winner = self.team2
+                self.looser = self.team1
+                self.team1.lost += 1
+                self.team1.save()
+                self.team2.win += 1
+                self.team2.save()
             else:
-                self.winner = self.match.team1
-                self.looser = self.match.team2
-        super(MatchResult, self).save(*args, **kwargs)
-
-    def __unicode__(self):
-        return self.match
+                self.winner = self.team1
+                self.looser = self.team2
+                self.team2.lost += 1
+                self.team2.save()
+                self.team1.win += 1
+                self.team1.save()
+        super(Match, self).save(*args, **kwargs)
 
 
 class Goal(models.Model):
     match = models.ForeignKey(Match)
     player = models.ForeignKey(Player)
-    team = models.ForeignKey(Team)
+    team = models.ForeignKey(Team, related_name="team")
+    op_team = models.ForeignKey(Team, related_name="Opposite_team")
     self_status = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
+        if self.team == self.op_team:
+            raise SameTeam
         if not TeamPlayer.objects.filter(team=self.team, player=self.player):
             self.player.no_of_goals += 1
             self.player.save()
             self.self_status = True
+        self.team.goal_fo += 1
+        self.op_team.goal_against += 1
+        self.team.save()
+        self.op_team.save()
+        if self.match.team1 == self.team:
+            self.match.team1_goal += 1
+        else:
+            self.match.team2_goal += 1
+        self.match.save()
         super(Goal, self).save(*args, **kwargs)
 
     def __unicode__(self):

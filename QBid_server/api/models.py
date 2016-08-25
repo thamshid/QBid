@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.db import models
 
-from  libraries.custom_exceptions import SameTeam, PlayerSoldOUT
+from libraries.custom_exceptions import SameTeam, PlayerSoldOUT
 
 
 class Image(models.Model):

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^leading_goal_scorer/', common.LeadingGoalScorer.as_view(), name='leading_goal_scorer'),
     url(r'^match_details/', common.MatchDetails.as_view(), name='MatchDetails'),
     url(r'^upcoming_matches/', common.UpcomingMatches.as_view(), name='UpcomingMatches'),
+    url(r'^team_player/', common.TeamPlayerList.as_view(), name='TeamPlayerList'),
 ]

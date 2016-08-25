@@ -4,7 +4,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Team, Match, Player, Goal
+from api.models import Team, Match, Player, Goal, TeamPlayer
 from api.serializer import PointTableSerializer, MatchSerializer, PlayerSerializer
 
 log = logging.getLogger(__name__)
@@ -114,6 +114,22 @@ class UpcomingMatches(APIView):
             queryset = Match.objects.filter(match_status=0).order_by('date')[:numbers]
             data = MatchSerializer(queryset, many=True)
             return Response(data.data)
+        except Exception as e:
+            log.error(e.message)
+            return Response({"status": -1, "message": str(e.message)})
+
+
+class TeamPlayerList(APIView):
+    def post(self, request):
+        try:
+            team_id = request.data['team_id']
+            teamplayer = TeamPlayer.objects.filter(team__id=team_id)
+            player_data = []
+            for player in teamplayer:
+                queryset = player.player
+                data = PlayerSerializer(queryset, many=False)
+                player_data.append(data.data)
+            return Response(player_data)
         except Exception as e:
             log.error(e.message)
             return Response({"status": -1, "message": str(e.message)})

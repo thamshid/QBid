@@ -1,11 +1,11 @@
 import logging
 
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.models import Team, Match, Player, Goal
-from api.serializer import PointTableSerializer, MatchSerializer, PlayerSerializer, GoalSerializer
-from django.db.models import Q
+from api.serializer import PointTableSerializer, MatchSerializer, PlayerSerializer
 
 log = logging.getLogger(__name__)
 
@@ -80,10 +80,10 @@ class MatchDetails(APIView):
                                   })
             data['team1'] = {
                 "team": match.team1.name,
-                 "team_image": match.team1.image.image_file.url,
+                "team_image": match.team1.image.image_file.url,
                 "goals": goal_list,
                 "no_of_gols": len(goals)
-                }
+            }
             goal_list = []
             goals = Goal.objects.filter(match=match, team=match.team2)
             for goal in goals:
@@ -97,9 +97,9 @@ class MatchDetails(APIView):
                 "team_image": match.team2.image.image_file.url,
                 "goals": goal_list,
                 "no_of_gols": len(goals),
-                }
-            data ['date'] = str(match.date)
-            data ['status'] = match.match_status
+            }
+            data['date'] = str(match.date)
+            data['status'] = match.match_status
 
             return Response(data)
         except Exception as e:

@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from api.models import Team, Match, Player, Goal
 
+
 class PointTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
@@ -47,5 +48,3 @@ class GoalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Goal
         fields = ('id', 'name', 'photo', 'no_of_goals', 'player_category')
-
-

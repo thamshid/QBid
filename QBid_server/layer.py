@@ -87,10 +87,10 @@ class EchoLayer(YowInterfaceLayer):
                 teams = Team.objects.all().order_by('-point', '-goal_fo', 'goal_against', 'game_played')
                 for team in teams:
                     answer += team.name + '\nGP: ' + \
-                              team.game_played + '\n W: ' + team.win +\
-                              '\nL: ' + team.lost + '\nD: ' + team.draw + \
-                              '\nGF: ' + team.goal_fo + '\nGA: ' + team.goal_against +\
-                              "\nP: " + team.point + '\n================='
+                              str(team.game_played) + '\n W: ' + str(team.win) +\
+                              '\nL: ' + str(team.lost) + '\nD: ' + str(team.draw) + \
+                              '\nGF: ' + str(team.goal_fo) + '\nGA: ' + str(team.goal_against) +\
+                              "\nP: " + str(team.point) + '\n================='
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl fixture':

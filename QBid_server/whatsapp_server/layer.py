@@ -75,12 +75,16 @@ class EchoLayer(YowInterfaceLayer):
                 answer = "Hi "+namemitt+" " 
                 self.toLower(textmsg(answer, to = recipient ))
                 print answer
+            if message == 'qpl site':
+                answer = "http://www.calicutqpl.tk"
+                self.toLower(textmsg(answer, to = recipient ))
+                print answer
             elif message == 'qpl developer':
                 answer = "QPL Developers \n***************\n Thamshid (Backend) \n Vikas (Frontend) \n Vysagh (Designer)"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl help':
-                answer = "QPL Help \n***************\n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE\n QPL TOPPERS\n QPL PLAYERS TEAM NAME"
+                answer = "QPL Help \n***************\n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE\n QPL TOPPERS\n QPL PLAYERS TEAM NAME\n QPL SITE"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl point':

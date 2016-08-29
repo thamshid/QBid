@@ -1,6 +1,7 @@
 import itertools
-import os
+import os, sys
 
+sys.path.append(os.getcwd()+'/../')
 from django.core.wsgi import get_wsgi_application
 
 if __name__ == "__main__":

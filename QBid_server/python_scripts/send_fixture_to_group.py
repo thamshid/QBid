@@ -1,5 +1,6 @@
-import os
+import os, sys
 
+sys.path.append(os.getcwd()+'/../')
 from django.core.wsgi import get_wsgi_application
 
 from libraries import send_whatsapp_msg

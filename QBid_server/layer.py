@@ -14,7 +14,7 @@ from yowsup.layers.protocol_presence.protocolentities  import UnavailablePresenc
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 application = get_wsgi_application()
-from api.models import Team
+from api.models import Team, Match, Player
 
 #Log, but only creates the file and writes only if you kill by hand from the console (CTRL + C)
 #import sys
@@ -79,7 +79,7 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl help':
-                answer = "QPL Help \n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT"
+                answer = "QPL Help \n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl point':
@@ -89,7 +89,22 @@ class EchoLayer(YowInterfaceLayer):
                     answer += team.name + '\nGP: ' + \
                               team.game_played + '\n W: ' + team.win +\
                               '\nL: ' + team.lost + '\nD: ' + team.draw + \
-                              '\nGF: ' + team.goal_fo + '\nGA: ' + team.goal_against + "\nP: " + team.point
+                              '\nGF: ' + team.goal_fo + '\nGA: ' + team.goal_against +\
+                              "\nP: " + team.point + '\n================='
+                self.toLower(textmsg(answer, to=recipient))
+                print answer
+            elif message == 'qpl fixture':
+                answer = "QPL Fixture\n=============\n"
+                matches = Match.objects.all().order_by('-date')
+                for match in matches:
+                    answer += str(match.date) + " " + str(match) + "\n"
+                self.toLower(textmsg(answer, to=recipient))
+                print answer
+            elif message == 'qpl toppers':
+                answer = "QPL Toppers\n=============\n"
+                players = Player.objects.filter(no_of_goals__gt=0).order_by('-no_of_goals')
+                for player in players:
+                    answer += str(player.name) + "   " + str(player.no_of_goals) + "\n"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
 

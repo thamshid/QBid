@@ -35,7 +35,7 @@ class Team(models.Model):
     name = models.CharField(max_length=100)
     username = models.CharField(unique=True, max_length=100)
     password = models.CharField(max_length=250)
-    image = models.ForeignKey(Image, null=True)
+    image = models.ForeignKey(Image, null=True, blank=True)
     balance = models.IntegerField(default=0)
     game_played = models.IntegerField(default=0)
     win = models.IntegerField(default=0)
@@ -51,12 +51,12 @@ class Team(models.Model):
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ForeignKey(Image, null=True)
-    dob = models.DateField(null=True)
+    image = models.ForeignKey(Image, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
     category = models.ForeignKey(PlayerCategory)
     base_value = models.IntegerField(default=0)
     reduced_value = models.IntegerField(default=0)
-    sold_value = models.IntegerField(null=True)
+    sold_value = models.IntegerField(null=True, blank=True)
     sold_out = models.BooleanField(default=False)
     no_of_goals = models.IntegerField(default=0)
 

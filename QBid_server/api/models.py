@@ -92,6 +92,8 @@ class TeamPlayer(models.Model):
             raise PlayerSoldOUT
         else:
             self.player.sold_out = True
+            self.player.sold_value = self.value
+            self.player.save()
 
         super(TeamPlayer, self).save(*args, **kwargs)
 

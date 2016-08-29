@@ -79,7 +79,7 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl help':
-                answer = "QPL Help \n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE"
+                answer = "QPL Help \n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE\n QPL TOPPERS"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl point':

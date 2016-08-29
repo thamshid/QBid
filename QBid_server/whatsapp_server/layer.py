@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os
+import os, sys
 import time
 
 from django.core.wsgi import get_wsgi_application
@@ -12,6 +12,7 @@ from yowsup.layers.protocol_presence.protocolentities  import AvailablePresenceP
 from yowsup.layers.protocol_presence.protocolentities  import PresenceProtocolEntity            #Name presence
 from yowsup.layers.protocol_presence.protocolentities  import UnavailablePresenceProtocolEntity #Offline
 
+sys.path.append(os.getcwd()+'/../')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 application = get_wsgi_application()
 from api.models import Team, Match, Player, TeamPlayer

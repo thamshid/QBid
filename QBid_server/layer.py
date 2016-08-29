@@ -108,7 +108,7 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message[:11] == 'qpl players':
-                team_name = message.split(' ')[2]
+                team_name = message[12:]
                 team = Team.objects.filter(name=team_name)
                 if team:
                     team_player = TeamPlayer.objects.filter(team__iexact=team)

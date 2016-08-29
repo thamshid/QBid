@@ -14,7 +14,7 @@ from yowsup.layers.protocol_presence.protocolentities  import UnavailablePresenc
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 application = get_wsgi_application()
-from api.models import Team, Match, Player
+from api.models import Team, Match, Player, TeamPlayer
 
 #Log, but only creates the file and writes only if you kill by hand from the console (CTRL + C)
 #import sys
@@ -79,7 +79,7 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl help':
-                answer = "QPL Help \n***************\n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE\n QPL TOPPERS"
+                answer = "QPL Help \n***************\n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE\n QPL TOPPERS\n QPL PLAYERS TEAM NAME"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl point':
@@ -107,5 +107,12 @@ class EchoLayer(YowInterfaceLayer):
                     answer += str(player.name) + "   " + str(player.no_of_goals) + "\n"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
-
-
+            elif message[:11] == 'qpl players':
+                team_name = message.split(' ')[2]
+                team = Team.objects.filter(name=team_name)
+                if team:
+                    team_player = TeamPlayer.objects.filter(team=team)
+                    answer = team.name + '\n****************\n'
+                    for player in team_player:
+                        answer += player.name + ' (' + player.category.name + ')\n'
+                    self.toLower(textmsg(answer, to=recipient))

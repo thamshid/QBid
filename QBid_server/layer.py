@@ -114,5 +114,5 @@ class EchoLayer(YowInterfaceLayer):
                     team_player = TeamPlayer.objects.filter(team=team)
                     answer = team.name + '\n****************\n'
                     for player in team_player:
-                        answer += player.name + ' (' + player.category.name + ')\n'
+                        answer += player.player.name + ' (' + player.player.category.name + ')\n'
                     self.toLower(textmsg(answer, to=recipient))

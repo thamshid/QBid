@@ -75,11 +75,11 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(textmsg(answer, to = recipient ))
                 print answer
             elif message == 'qpl developer':
-                answer = "QPL Developers \n Thamshid (Backend) \n Vikas (Frontend) \n Vysagh (Designer)"
+                answer = "QPL Developers \n***************\n Thamshid (Backend) \n Vikas (Frontend) \n Vysagh (Designer)"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl help':
-                answer = "QPL Help \n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE\n QPL TOPPERS"
+                answer = "QPL Help \n***************\n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE\n QPL TOPPERS"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl point':
@@ -94,14 +94,14 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl fixture':
-                answer = "QPL Fixture\n=============\n"
+                answer = "QPL Fixture\n****************\n"
                 matches = Match.objects.all().order_by('-date')
                 for match in matches:
                     answer += str(match.date) + " " + str(match) + "\n"
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl toppers':
-                answer = "QPL Toppers\n=============\n"
+                answer = "QPL Toppers\n*****************\n"
                 players = Player.objects.filter(no_of_goals__gt=0).order_by('-no_of_goals')
                 for player in players:
                     answer += str(player.name) + "   " + str(player.no_of_goals) + "\n"

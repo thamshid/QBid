@@ -65,9 +65,17 @@ class EchoLayer(YowInterfaceLayer):
         #The sleep you write so #time.sleep(1)
 
         if True:
-            if message == 'hi':
+            if message == 'qpl hi':
                 answer = "Hi "+namemitt+" " 
                 self.toLower(textmsg(answer, to = recipient ))
+                print answer
+            elif message == 'qpl developer':
+                answer = "QPL Developers \n Thamshid (Backend) \n Vikas (Frontend) \n Vysagh (Designer)"
+                self.toLower(textmsg(answer, to=recipient))
+                print answer
+            elif message == 'qpl help':
+                answer = "QPL List \n QPL HI\n QPL HELP \n QPL DEVELOPER"
+                self.toLower(textmsg(answer, to=recipient))
                 print answer
 
 

@@ -6,12 +6,13 @@ from yowsup.layers.auth                        import YowAuthenticationProtocolL
 from yowsup.layers.coder                       import YowCoderLayer
 from yowsup.layers.network                     import YowNetworkLayer
 from yowsup.env                                import YowsupEnv
+from settings import WHATSAPP_NUMBER, WHATSAPP_PASSWORD
 
 #Uncomment to log
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
 
-CREDENTIALS = ("919526939690", "fEiTb0TCXOxMJGGHY1H4Zr0MB+g=") #replace with your phone and password
+CREDENTIALS = (WHATSAPP_NUMBER, WHATSAPP_PASSWORD) #replace with your phone and password
 
 if __name__==  "__main__":
     stackBuilder = YowStackBuilder()

@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
-import os, subprocess, time
+import os
+import time
 
-
-from yowsup.layers.interface                           import YowInterfaceLayer                 #Reply to the message
+from django.core.wsgi import get_wsgi_application
+from yowsup.common.tools                               import Jid                               #is writing, writing pause
 from yowsup.layers.interface                           import ProtocolEntityCallback            #Reply to the message
+from yowsup.layers.interface                           import YowInterfaceLayer                 #Reply to the message
+from yowsup.layers.protocol_chatstate.protocolentities import OutgoingChatstateProtocolEntity   #is writing, writing pause
 from yowsup.layers.protocol_messages.protocolentities  import TextMessageProtocolEntity         #Body message
 from yowsup.layers.protocol_presence.protocolentities  import AvailablePresenceProtocolEntity   #Online
-from yowsup.layers.protocol_presence.protocolentities  import UnavailablePresenceProtocolEntity #Offline
 from yowsup.layers.protocol_presence.protocolentities  import PresenceProtocolEntity            #Name presence
-from yowsup.layers.protocol_chatstate.protocolentities import OutgoingChatstateProtocolEntity   #is writing, writing pause
-from yowsup.common.tools                               import Jid                               #is writing, writing pause
+from yowsup.layers.protocol_presence.protocolentities  import UnavailablePresenceProtocolEntity #Offline
+
+from api.models import Team
 
 #Log, but only creates the file and writes only if you kill by hand from the console (CTRL + C)
 #import sys
@@ -24,7 +27,8 @@ from yowsup.common.tools                               import Jid               
 #sys.stdout = Logger("/1.txt")
 #print "Hello world !" # this is should be saved in yourlogfilename.txt
 #------------#------------#------------#------------#------------#------------
-
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+application = get_wsgi_application()
 
 name = "NAMEPRESENCE"
 filelog = "/root/.yowsup/Not allowed.log"
@@ -74,7 +78,17 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
             elif message == 'qpl help':
-                answer = "QPL List \n QPL HI\n QPL HELP \n QPL DEVELOPER"
+                answer = "QPL Help \n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT"
+                self.toLower(textmsg(answer, to=recipient))
+                print answer
+            elif message == 'qpl point':
+                answer = "QPL Point Table\n==================\n"
+                teams = Team.objects.all().order_by('-point', '-goal_fo', 'goal_against', 'game_played')
+                for team in teams:
+                    answer += team.name + '\nGP: ' + \
+                              team.game_played + '\n W: ' + team.win +\
+                              '\nL: ' + team.lost + '\nD: ' + team.draw + \
+                              '\nGF: ' + team.goal_fo + '\nGA: ' + team.goal_against + "\nP: " + team.point
                 self.toLower(textmsg(answer, to=recipient))
                 print answer
 

@@ -111,7 +111,7 @@ class EchoLayer(YowInterfaceLayer):
                 team_name = message.split(' ')[2]
                 team = Team.objects.filter(name=team_name)
                 if team:
-                    team_player = TeamPlayer.objects.filter(team=team)
+                    team_player = TeamPlayer.objects.filter(team__iexact=team)
                     answer = team.name + '\n****************\n'
                     for player in team_player:
                         answer += player.name + ' (' + player.category.name + ')\n'

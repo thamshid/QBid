@@ -25,7 +25,7 @@ class Image(models.Model):
 
 class PlayerCategory(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ForeignKey(Image, null=True)
+    image = models.ForeignKey(Image, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -109,6 +109,7 @@ class Galary(models.Model):
 
 
 class Match(models.Model):
+    name = models.CharField(max_length=50)
     team1 = models.ForeignKey(Team, related_name='team1')
     team2 = models.ForeignKey(Team, related_name='team2')
     date = models.DateField(null=True)

@@ -8,6 +8,8 @@ from yowsup.layers.network                     import YowNetworkLayer
 from yowsup.env                                import YowsupEnv
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
+import sys, os
+sys.path.append(os.getcwd()+'/../')
 from settings import WHATSAPP_NUMBER, WHATSAPP_PASSWORD
 
 #Uncomment to log

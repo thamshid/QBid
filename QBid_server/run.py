@@ -6,6 +6,8 @@ from yowsup.layers.auth                        import YowAuthenticationProtocolL
 from yowsup.layers.coder                       import YowCoderLayer
 from yowsup.layers.network                     import YowNetworkLayer
 from yowsup.env                                import YowsupEnv
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
 from settings import WHATSAPP_NUMBER, WHATSAPP_PASSWORD
 
 #Uncomment to log

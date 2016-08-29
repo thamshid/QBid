@@ -12,6 +12,8 @@ from yowsup.layers.protocol_presence.protocolentities  import AvailablePresenceP
 from yowsup.layers.protocol_presence.protocolentities  import PresenceProtocolEntity            #Name presence
 from yowsup.layers.protocol_presence.protocolentities  import UnavailablePresenceProtocolEntity #Offline
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+application = get_wsgi_application()
 from api.models import Team
 
 #Log, but only creates the file and writes only if you kill by hand from the console (CTRL + C)
@@ -27,8 +29,7 @@ from api.models import Team
 #sys.stdout = Logger("/1.txt")
 #print "Hello world !" # this is should be saved in yourlogfilename.txt
 #------------#------------#------------#------------#------------#------------
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
-application = get_wsgi_application()
+
 
 name = "NAMEPRESENCE"
 filelog = "/root/.yowsup/Not allowed.log"

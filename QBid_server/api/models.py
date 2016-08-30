@@ -185,3 +185,10 @@ class Goal(models.Model):
 
     def __unicode__(self):
         return self.player.name
+
+
+class EmailList(models.Model):
+    email = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.email

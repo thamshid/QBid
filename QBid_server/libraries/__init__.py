@@ -8,3 +8,4 @@ def send_whatsapp_msg(number=WHATSAPP_NUMBER, password=WHATSAPP_PASSWORD, to_num
     for msg in messages:
         os.system('yowsup-cli demos --send ' + to_number +' "' + msg + '" --login '+ number + ':' + password)
     return True
+

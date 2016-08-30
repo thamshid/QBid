@@ -86,7 +86,6 @@ def send_match_email(match):
             msg_image.add_header('Content-ID', '<' + cid + '>')
             msg.attach(msg_image)
         print message
-        return 1
-        #return msg.send()
+        return msg.send()
     except Exception as e:
         return e.message

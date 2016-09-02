@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import os, sys
+import os
+import sys
 import time
 
 from django.core.wsgi import get_wsgi_application
@@ -7,6 +8,9 @@ from yowsup.common.tools                               import Jid               
 from yowsup.layers.interface                           import ProtocolEntityCallback            #Reply to the message
 from yowsup.layers.interface                           import YowInterfaceLayer                 #Reply to the message
 from yowsup.layers.protocol_chatstate.protocolentities import OutgoingChatstateProtocolEntity   #is writing, writing pause
+from yowsup.layers.protocol_media.protocolentities import (
+    RequestUploadIqProtocolEntity
+)
 from yowsup.layers.protocol_messages.protocolentities  import TextMessageProtocolEntity         #Body message
 from yowsup.layers.protocol_presence.protocolentities  import AvailablePresenceProtocolEntity   #Online
 from yowsup.layers.protocol_presence.protocolentities  import PresenceProtocolEntity            #Name presence
@@ -82,6 +86,7 @@ class EchoLayer(YowInterfaceLayer):
             elif message == 'qpl developer':
                 answer = "QPL Developers \n***************\n Thamshid (Backend) \n Vikas (Frontend) \n Vysagh (Designer)"
                 self.toLower(textmsg(answer, to=recipient))
+                self.media_send('919946728446', '/home/qpl/1.jpg', RequestUploadIqProtocolEntity.MEDIA_TYPE_VIDEO)
                 print answer
             elif message == 'qpl help':
                 answer = "QPL Help \n***************\n QPL HI\n QPL HELP \n QPL DEVELOPER\n QPL POINT\n QPL FIXTURE\n QPL TOPPERS\n QPL PLAYERS TEAM NAME\n QPL SITE"

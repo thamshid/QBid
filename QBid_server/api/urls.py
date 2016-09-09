@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^match_details/', common.MatchDetails.as_view(), name='MatchDetails'),
     url(r'^upcoming_matches/', common.UpcomingMatches.as_view(), name='UpcomingMatches'),
     url(r'^team_player/', common.TeamPlayerList.as_view(), name='TeamPlayerList'),
+    url(r'^match_fixture/', common.MatchFixture.as_view(), name='MatchFixture'),
 ]

@@ -133,3 +133,14 @@ class TeamPlayerList(APIView):
         except Exception as e:
             log.error(e.message)
             return Response({"status": -1, "message": str(e.message)})
+
+
+class MatchFixture(APIView):
+    def post(self, request):
+        try:
+            queryset = Match.objects.all().order_by('-match_status', 'date')
+            data = MatchSerializer(queryset, many=True)
+            return Response(data.data)
+        except Exception as e:
+            log.error(e.message)
+            return Response({"status": -1, "message": str(e.message)})

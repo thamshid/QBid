@@ -136,9 +136,12 @@ class TeamPlayerList(APIView):
 
 
 class MatchFixture(APIView):
-    def get(self, request):
+    def post(self, request):
         try:
-            queryset = Match.objects.all().order_by('-match_status', 'date')
+            queryset = Match.objects.all()
+            if "match_status" in request.data:
+                queryset = queryset.filter(match_status=int(request.data['match_status']))
+            queryset = queryset.order_by('-match_status', 'date')
             data = MatchSerializer(queryset, many=True)
             return Response(data.data)
         except Exception as e:

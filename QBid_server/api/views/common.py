@@ -136,7 +136,7 @@ class TeamPlayerList(APIView):
 
 
 class MatchFixture(APIView):
-    def post(self, request):
+    def get(self, request):
         try:
             queryset = Match.objects.all().order_by('-match_status', 'date')
             data = MatchSerializer(queryset, many=True)
